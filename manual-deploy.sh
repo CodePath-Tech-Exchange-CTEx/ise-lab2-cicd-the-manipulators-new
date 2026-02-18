@@ -1,6 +1,6 @@
 ### VARIABLES TO CHANGE - START
-PROJECT_ID=
-SERVICE_NAME=
+PROJECT_ID=jesus-munoz-utep
+SERVICE_NAME=ise-lab2-cicd-the-manipulators-new
 ### VARIABLES TO CHANGE - END
 
 # ----------- Manual Deployment ------------ #
