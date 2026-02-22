@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- HTML Doc written by Claude with minor adjustments from Kenneth marked -->
+<html lang="en"> 
 <head>
   <meta charset="UTF-8" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,8 +22,8 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       overflow: hidden;
-      /* box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12); */
-      background: transparent; /* ← add this */
+      /* Changed background to transparent + removed box shadow - Kenneth */
+      background: transparent;
       height: 420px;
     }
 
@@ -43,9 +44,9 @@
     .post-right {
       display: flex;
       flex-direction: column;
-      /* background: #1a1a1a; Dark background */
+      /* Changed background to transparent - Kenneth */
       background: transparent;
-      height: 100%; /* ← add this */
+      height: 100%;
     }
 
     /* User meta row */
@@ -79,6 +80,7 @@
     }
 
     .username {
+      /* Adjusted username color - Kenneth */
       color: #ffffff;
     }
 
@@ -86,6 +88,7 @@
       font-family: 'DM Serif Display', serif;
       font-style: italic;
       font-size: 1rem;
+      /* Adjusted color text - Kenneth */
       color: rgba(255, 255, 255, 0.6);
     }
 
@@ -93,7 +96,7 @@
     .post-content-box {
       flex: 1;
       background: transparent;
-      padding: 0 20px 24px 20px; /* ← matches the 20px left padding of user-meta */
+      padding: 0 20px 24px 20px; /* matches the 20px left padding of user-meta */
       overflow-y: auto;
     }
 
@@ -101,6 +104,7 @@
       font-family: 'DM Sans', sans-serif;
       font-size: 1.05rem;
       line-height: 1.7;
+      /* Adjusted the color text - Kenneth */
       color: rgba(255, 255, 255, 0.93);
     }
   </style>
