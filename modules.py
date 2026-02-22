@@ -8,6 +8,7 @@
 #############################################################################
 
 from internals import create_component
+from datetime import datetime #to calculate total time summary (Jesus Munoz)
 
 
 # This one has been written for you as an example. You may change it as wanted.
@@ -65,10 +66,50 @@ def display_post(username, user_image, timestamp, content, post_image):
     create_component(data, html_file_name, height=450) # Line written by Claude
     return data # Line written by Claude
 
-def display_activity_summary(workouts_list):
-    """Write a good docstring here."""
-    pass
 
+def display_activity_summary(workouts_list):
+    """Displays the progress summary and workout list page."""
+    
+    # 1. Current Date
+    current_date = datetime.now().strftime("%b %d, %Y")
+
+    # 2. Calculate Totals - Sum up all workouts' metrics for the summary circles
+    total_distance = sum(w.get('distance', 0) for w in workouts_list)
+    total_calories = sum(w.get('calories_burned', 0) for w in workouts_list)
+    total_steps = sum(w.get('steps', 0) for w in workouts_list)
+
+    # 3. Build Workout Boxes - Create individual bordered boxes for each workout
+    workout_boxes = []
+    for workout in workouts_list:
+        try:
+            start = datetime.strptime(workout['start_timestamp'], '%Y-%m-%d %H:%M:%S')
+            end = datetime.strptime(workout['end_timestamp'], '%Y-%m-%d %H:%M:%S')
+            duration = end - start
+            hours = duration.seconds // 3600
+            minutes = (duration.seconds % 3600) // 60
+            time_str = f"{hours:02d}:{minutes:02d}"
+        except:
+            time_str = "00:30"
+
+        
+        box_html = '<div class="workout-item"><div class="workout-id">Workout ID: ' + workout['workout_id'] + '</div><div>Total Time: ' + time_str + '</div><div>Calories: ' + str(workout['calories_burned']) + '</div><div>Steps: ' + str(workout['steps']) + '</div><div>Distance: ' + str(workout['distance']) + ' mi</div></div>'
+        workout_boxes.append(box_html)
+    
+    # Join all workout boxes into a single string (no separators needed)
+    workout_content = ''.join(workout_boxes)
+
+    # 4. Final data bundle
+    data = {
+        'DATE': current_date,
+        'TOTAL_DISTANCE': round(total_distance, 1),
+        'TOTAL_CALORIES': total_calories,
+        'TOTAL_STEPS': total_steps,
+        'WORKOUT_LIST': workout_content  
+    }
+
+    # 5. Render
+    create_component(data, "display_activity_summary", height=900)
+    
 
 def display_recent_workouts(workouts_list):
     """Write a good docstring here."""

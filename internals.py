@@ -17,7 +17,7 @@ def load_html_file(file_path):
 
 def safe_string(string):
     # Make the string "safe" by escaping quotes and a backslash character
-    return ''.join(['\\' + c if c in ["'", '"', '\\'] else c for c in string])
+    return ''.join(['\\' + c if c in ["'", '\\'] else c for c in string])
 
 
 def create_component(data, component_name, height=None, width=None, scrolling=False):
