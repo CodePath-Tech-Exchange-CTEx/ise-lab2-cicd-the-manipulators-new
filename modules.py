@@ -93,7 +93,14 @@ def display_recent_workouts(workouts_list):
 
     Returns
     -------
-    None
+    data_list: list[dict[str, str | int | float | tuple[float, float]]]
+        The list of user's workouts with extra info. Each workout is a dictionary with the following keys:
+            'WORKOUT_NAME',
+            'CALORIES_BURNED',
+            'START_TIME',
+            'END_TIME',
+            'STEPS',
+            'DISTANCE'. 
     """
     html_file_name = "display_recent_workouts_header"
     data = {
@@ -104,6 +111,7 @@ def display_recent_workouts(workouts_list):
     html_file_name = "display_recent_workouts"
 
     recent_workouts = workouts_list[:3]
+    data_list = []
     for workout in recent_workouts:
         data = {
             'WORKOUT_NAME': workout['workout_id'],
@@ -113,9 +121,10 @@ def display_recent_workouts(workouts_list):
             'STEPS': workout['steps'],
             'DISTANCE': workout['distance']
         }
+        data_list.append(data)
         create_component(data, html_file_name, height=150)
 
-    return recent_workouts
+    return data_list
 
 
 def display_genai_advice(timestamp, content, image):
