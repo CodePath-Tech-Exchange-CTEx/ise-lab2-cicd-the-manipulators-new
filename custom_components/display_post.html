@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<!-- HTML Doc written by Claude with minor adjustments from Kenneth marked -->
+<html lang="en"> 
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: transparent;
+    }
+
+    /* ── Card shell ─────────────────────────────────────────────────── */
+    .post-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      /* Changed background to transparent + removed box shadow - Kenneth */
+      background: transparent;
+      height: 420px;
+    }
+
+    /* ── Left: post image ────────────────────────────────────────────── */
+    .post-image-wrap {
+      overflow: hidden;
+      background: #f08080;
+    }
+
+    .post-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Right panel ─────────────────────────────────────────────────── */
+    .post-right {
+      display: flex;
+      flex-direction: column;
+      /* Changed background to transparent - Kenneth */
+      background: transparent;
+      height: 100%;
+    }
+
+    /* User meta row */
+    .user-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 20px 16px;
+    }
+
+    .user-avatar-wrap {
+      flex-shrink: 0;
+      width: 58px;
+      height: 58px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #f08080;
+    }
+
+    .user-avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .username {
+      /* Adjusted username color - Kenneth */
+      color: #ffffff;
+    }
+
+    .timestamp {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 1rem;
+      /* Adjusted color text - Kenneth */
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Content box */
+    .post-content-box {
+      flex: 1;
+      background: transparent;
+      padding: 0 20px 24px 20px; /* matches the 20px left padding of user-meta */
+      overflow-y: auto;
+    }
+
+    .post-content-box p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      /* Adjusted the color text - Kenneth */
+      color: rgba(255, 255, 255, 0.93);
+    }
+  </style>
+</head>
+<body>
+  <div class="post-card">
+
+    <!-- LEFT: post image -->
+    <div class="post-image-wrap">
+      <img src="{{POST_IMAGE}}" alt="Post image">
+    </div>
+
+    <!-- RIGHT panel -->
+    <div class="post-right">
+
+      <!-- User meta row -->
+      <div class="user-meta">
+        <div class="user-avatar-wrap">
+          <img src="{{USER_IMAGE}}" alt="{{USERNAME}}'s avatar">
+        </div>
+        <div class="user-info">
+          <span class="username">{{USERNAME}},</span>
+          <span class="timestamp">{{TIMESTAMP}}</span>
+        </div>
+      </div>
+
+      <!-- Content box -->
+      <div class="post-content-box">
+        <p>{{CONTENT}}</p>
+      </div>
+
+    </div><!-- /post-right -->
+
+  </div><!-- /post-card -->
+</body>
+</html>
