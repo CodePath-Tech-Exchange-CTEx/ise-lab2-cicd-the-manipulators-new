@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!-- HTML Doc written by Claude -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: transparent;
+    }
+
+    /* ── Card shell ─────────────────────────────────────────────────── */
+    .post-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Line written by Claude */
+      overflow: hidden;
+      background: transparent;
+      height: 420px; /* Line written by Claude */
+    }
+
+    /* ── Left: post image ────────────────────────────────────────────── */
+    .post-image-wrap {
+      overflow: hidden;
+      background: #f08080;
+    }
+
+    .post-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Right panel ─────────────────────────────────────────────────── */
+    .post-right {
+      display: flex;
+      flex-direction: column;
+      background: transparent;
+      height: 100%; /* Line written by Claude */
+    }
+
+    /* Timestamp header */ /* Line written by Claude */
+    .timestamp-header { /* Line written by Claude */
+      padding: 20px 20px 16px; /* Line written by Claude */
+    } /* Line written by Claude */
+
+    .timestamp { /* Line written by Claude */
+      font-family: 'DM Serif Display', serif; /* Line written by Claude */
+      font-style: italic; /* Line written by Claude */
+      font-size: 1.25rem; /* Line written by Claude */
+      color: rgba(255, 255, 255, 0.9); /* Line written by Claude */
+    } /* Line written by Claude */
+
+    /* Content box */
+    .post-content-box {
+      flex: 1; /* Line written by Claude */
+      background: transparent;
+      padding: 0 20px 24px 20px; /* Line written by Claude */
+      overflow-y: auto;
+    }
+
+    .post-content-box p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.93);
+    }
+  </style>
+</head>
+<body>
+  <div class="post-card">
+
+    <!-- LEFT: image --> <!-- Line written by Claude -->
+    <div class="post-image-wrap">
+      <img src="{{IMAGE}}" alt="Advice image"> <!-- Line written by Claude -->
+    </div>
+
+    <!-- RIGHT panel -->
+    <div class="post-right">
+
+      <!-- Timestamp header --> <!-- Line written by Claude -->
+      <div class="timestamp-header"> <!-- Line written by Claude -->
+        <span class="timestamp">{{TIMESTAMP}}</span> <!-- Line written by Claude -->
+      </div> <!-- Line written by Claude -->
+
+      <!-- Content box -->
+      <div class="post-content-box">
+        <p>{{CONTENT}}</p>
+      </div>
+
+    </div><!-- /post-right -->
+
+  </div><!-- /post-card -->
+</body>
+</html>
