@@ -9,6 +9,7 @@
 
 from internals import create_component
 from datetime import datetime #to calculate total time summary (Jesus Munoz)
+from datetime import datetime #to calculate total time summary (Jesus Munoz)
 
 
 # This one has been written for you as an example. You may change it as wanted.
