@@ -107,7 +107,8 @@ def display_recent_workouts(workouts_list):
             'STEPS': workout['steps'],
             'DISTANCE': workout['distance']
         }
-        
+        create_component(data, html_file_name, height=)
+
     return recent_workouts
 
 
