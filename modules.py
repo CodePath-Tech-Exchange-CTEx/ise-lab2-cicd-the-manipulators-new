@@ -71,9 +71,30 @@ def display_activity_summary(workouts_list):
 
 
 def display_recent_workouts(workouts_list):
-    """Write a good docstring here."""
-    pass
+    """Displays a single user recent workouts in a three rows.
 
+    The page contain three rows of user's recent workouts. 
+    Each row consist of details about the workout, which includes
+    the name, calories burned, start and end times, steps taken and distance.
+    
+    Parameters
+    ----------
+    workouts_list : list[dict[str, str | int | float | tuple[float, float]]]
+        The list of user's workouts with extra info. Each workout is a dictionary with the following keys:
+            'workout_id',
+            'start_timestamp',
+            'end_timestamp',
+            'start_lat_lng',
+            'end_lat_lng',
+            'distance',
+            'steps',
+            'calories_burned'. 
+    
+
+    Returns
+    -------
+    None
+    """
 
 def display_genai_advice(timestamp, content, image):
     """Displays generative AI advice in a two-column card layout.
