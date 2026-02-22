@@ -95,6 +95,12 @@ def display_recent_workouts(workouts_list):
     -------
     None
     """
+    html_file_name = "display_recent_workouts_header"
+    data = {
+        "TITLE" : "RECENT WORKOUTS"
+    }
+    create_component(data, html_file_name, height=50)
+
     html_file_name = "display_recent_workouts"
 
     recent_workouts = workouts_list[:3]
@@ -107,7 +113,7 @@ def display_recent_workouts(workouts_list):
             'STEPS': workout['steps'],
             'DISTANCE': workout['distance']
         }
-        create_component(data, html_file_name, height=)
+        create_component(data, html_file_name, height=150)
 
     return recent_workouts
 
