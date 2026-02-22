@@ -96,6 +96,22 @@ def display_recent_workouts(workouts_list):
     None
     """
 
+    for workout in workouts_list[:3]:
+        data = {
+            'WORKOUT_NAME': workout['workout_id'],
+            'CALORIES_BURNED': workout['calories_burned'],
+            'START_TIME': workout['start_timestamp'],
+            'END_TIME': workout['end_timestamp'],
+            'STEPS': workout['steps'],
+            'DISTANCE': workout['distance']
+        }
+
+
+
+    
+
+    
+
 def display_genai_advice(timestamp, content, image):
     """Displays generative AI advice in a two-column card layout.
 
