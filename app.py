@@ -20,6 +20,28 @@ def display_app_page():
     value = st.text_input('Enter your name')
     display_my_custom_component(value)
 
+def display_genai_advice_page():
+    """Displays the genai advice page."""
+    advice = get_genai_advice(userId) # Line written by Claude
+    display_genai_advice( # Line written by Claude
+        timestamp=advice['timestamp'], # Line written by Claude
+        content=advice['content'], # Line written by Claude
+        image=advice['image'] # Line written by Claude
+    ) # Line written by Claude
+
+def display_post_page():
+    """Displays the post page."""
+    posts = get_user_posts(userId) # Line written by Claude
+    profile = get_user_profile(userId) # Line written by Claude
+
+    for post in posts: # Line written by Claude
+        display_post( # Line written by Claude
+            username=profile['username'], # Line written by Claude
+            user_image=profile['profile_image'], # Line written by Claude
+            timestamp=post['timestamp'], # Line written by Claude
+            content=post['content'], # Line written by Claude
+            post_image=post['image'] # Line written by Claude
+        ) # Line written by Claude
 
 # This is the starting point for your app. You do not need to change these lines
 if __name__ == '__main__':

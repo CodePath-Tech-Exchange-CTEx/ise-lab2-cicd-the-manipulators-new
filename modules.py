@@ -76,5 +76,29 @@ def display_recent_workouts(workouts_list):
 
 
 def display_genai_advice(timestamp, content, image):
-    """Write a good docstring here."""
-    pass
+    """Displays generative AI advice in a two-column card layout.
+
+    The post renders a large image on the left, and on the right
+    shows the timestamp and content of the generated AI advice. 
+
+    Parameters
+    ----------
+    timestamp : str or datetime
+        The date/time the post was created (e.g. "2024-02-20 10:34").
+    content : str
+        The text body of the post.
+    image : str
+        File path, URL, or image object for the post's main image.
+
+    Returns
+    -------
+    None
+    """
+    data = { # Line written by Claude
+        'TIMESTAMP': timestamp, # Line written by Claude
+        'CONTENT':   content, # Line written by Claude
+        'IMAGE':     image, # Line written by Claude
+    } # Line written by Claude
+
+    html_file_name = "display_genai_advice" # Line written by Claude
+    create_component(data, html_file_name, height=450) # Line written by Claude
