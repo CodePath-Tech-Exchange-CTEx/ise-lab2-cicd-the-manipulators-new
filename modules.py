@@ -106,7 +106,7 @@ def display_recent_workouts(workouts_list):
     data = {
         "TITLE" : "RECENT WORKOUTS"
     }
-    create_component(data, html_file_name, height=50)
+    create_component(data, html_file_name, height=100)
 
     html_file_name = "display_recent_workouts"
 
