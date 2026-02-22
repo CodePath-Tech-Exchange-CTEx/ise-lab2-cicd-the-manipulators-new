@@ -1,8 +1,8 @@
-# TODO: Replace with your team name
+# The Manipulators
 
 ## Our Team
 
-TODO: Replace with your team members
+Kenneth Ly
 
 # Setup
 
