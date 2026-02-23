@@ -49,9 +49,90 @@ class TestDisplayPost(unittest.TestCase):
 class TestDisplayActivitySummary(unittest.TestCase):
     """Tests the display_activity_summary function."""
 
-    def test_foo(self):
-        """Tests foo."""
-        pass
+    def test_function_exists(self):
+        """Test that display_activity_summary function exists and is callable."""
+        self.assertTrue(callable(display_activity_summary))
+
+    def test_function_accepts_workouts_list(self):
+        """Test that function accepts a list of workouts."""
+        workouts = [
+            {
+                'workout_id': 'workout0',
+                'start_timestamp': '2024-01-01 00:00:00',
+                'end_timestamp': '2024-01-01 00:30:00',
+                'distance': 5.5,
+                'steps': 1000,
+                'calories_burned': 100
+            }
+        ]
+        try:
+            display_activity_summary(workouts)
+        except Exception as e:
+            self.fail(f"display_activity_summary raised {e} unexpectedly!")
+    
+    def test_function_with_multiple_workouts(self):
+        """Test that function handles multiple workouts."""
+        workouts = [
+            {
+                'workout_id': 'workout0',
+                'start_timestamp': '2024-01-01 00:00:00',
+                'end_timestamp': '2024-01-01 00:30:00',
+                'distance': 5.5,
+                'steps': 1000,
+                'calories_burned': 100
+            },
+            {
+                'workout_id': 'workout1',
+                'start_timestamp': '2024-01-01 01:00:00',
+                'end_timestamp': '2024-01-01 01:30:00',
+                'distance': 3.2,
+                'steps': 2000,
+                'calories_burned': 50
+            }
+        ]
+        try:
+            display_activity_summary(workouts)
+        except Exception as e:
+            self.fail(f"display_activity_summary raised {e} unexpectedly!")
+
+    def test_function_with_empty_workouts_list(self):
+        """Test that function handles empty workouts list."""
+        try:
+            display_activity_summary([])
+        except Exception as e:
+            self.fail(f"display_activity_summary raised {e} unexpectedly!")
+
+    def test_function_with_missing_optional_fields(self):
+        """Test that function handles workouts with missing optional fields."""
+        workouts = [
+            {
+                'workout_id': 'workout0',
+                'start_timestamp': '2024-01-01 00:00:00',
+                'end_timestamp': '2024-01-01 00:30:00'
+                # missing distance, steps, calories_burned
+            }
+        ]
+        try:
+            display_activity_summary(workouts)
+        except Exception as e:
+            self.fail(f"display_activity_summary raised {e} unexpectedly!")
+
+    def test_function_with_invalid_timestamp(self):
+        """Test that function handles invalid timestamp gracefully."""
+        workouts = [
+            {
+                'workout_id': 'workout0',
+                'start_timestamp': 'invalid',
+                'end_timestamp': 'invalid',
+                'distance': 5.0,
+                'steps': 1000,
+                'calories_burned': 100
+            }
+        ]
+        try:
+            display_activity_summary(workouts)
+        except Exception as e:
+            self.fail(f"display_activity_summary raised {e} unexpectedly!")
 
 
 class TestDisplayGenAiAdvice(unittest.TestCase):
