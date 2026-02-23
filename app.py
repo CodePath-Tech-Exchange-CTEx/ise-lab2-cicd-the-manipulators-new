@@ -50,6 +50,10 @@ def display_activity_summary_page():
  
     # Pass that data into your UI module function
     display_activity_summary(user_workouts)
+def display_recent_workouts_page():
+    """Displays the recent workouts page."""
+    workouts = get_user_workouts(userId) 
+    display_recent_workouts(workouts) 
 
 # This is the starting point for your app. You do not need to change these lines
 if __name__ == '__main__':

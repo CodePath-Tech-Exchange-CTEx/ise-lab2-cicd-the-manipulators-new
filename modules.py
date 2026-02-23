@@ -129,8 +129,60 @@ def display_activity_summary(workouts_list):
     
 
 def display_recent_workouts(workouts_list):
-    """Write a good docstring here."""
-    pass
+    """Displays a single user recent workouts in a three rows.
+
+    The page contain three rows of user's recent workouts. 
+    Each row consist of details about the workout, which includes
+    the name, calories burned, start and end times, steps taken and distance.
+    
+    Parameters
+    ----------
+    workouts_list : list[dict[str, str | int | float | tuple[float, float]]]
+        The list of user's workouts with extra info. Each workout is a dictionary with the following keys:
+            'workout_id',
+            'start_timestamp',
+            'end_timestamp',
+            'start_lat_lng',
+            'end_lat_lng',
+            'distance',
+            'steps',
+            'calories_burned'. 
+    
+
+    Returns
+    -------
+    data_list: list[dict[str, str | int | float | tuple[float, float]]]
+        The list of user's workouts with extra info. Each workout is a dictionary with the following keys:
+            'WORKOUT_NAME',
+            'CALORIES_BURNED',
+            'START_TIME',
+            'END_TIME',
+            'STEPS',
+            'DISTANCE'. 
+    """
+    html_file_name = "display_recent_workouts_header"
+    data = {
+        "TITLE" : "RECENT WORKOUTS"
+    }
+    create_component(data, html_file_name)
+
+    html_file_name = "display_recent_workouts"
+
+    recent_workouts = workouts_list[:3]
+    data_list = []
+    for workout in recent_workouts:
+        data = {
+            'WORKOUT_NAME': workout['workout_id'],
+            'CALORIES_BURNED': workout['calories_burned'],
+            'START_TIME': workout['start_timestamp'][11:],
+            'END_TIME': workout['end_timestamp'][11:],
+            'STEPS': workout['steps'],
+            'DISTANCE': workout['distance']
+        }
+        data_list.append(data)
+        create_component(data, html_file_name)
+
+    return data_list
 
 
 def display_genai_advice(timestamp, content, image):
