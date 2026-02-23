@@ -68,7 +68,24 @@ def display_post(username, user_image, timestamp, content, post_image):
 
 
 def display_activity_summary(workouts_list):
-    """Displays the progress summary and workout list page."""
+    """
+    Calculates activity metrics and renders a multi-component dashboard.
+
+    This function processes a list of workout dictionaries to generate cumulative 
+    totals (distance, calories, steps) and formats individual workout data into 
+    HTML-styled boxes. 
+
+    Args:
+        workouts_list (list[dict]): A list of workout records. Each dictionary 
+            should contain:
+            - 'workout_id' (str): ID for the workout.
+            - 'start_timestamp' (str): ISO formatted start time.
+            - 'end_timestamp' (str): ISO formatted end time.
+            - 'distance' (float): Distance covered in miles.
+            - 'calories_burned' (int): Total calories burned.
+            - 'steps' (int): Total step count.
+
+    """
     
     # 1. Current Date
     current_date = datetime.now().strftime("%b %d, %Y")
