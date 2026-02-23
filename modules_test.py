@@ -89,10 +89,49 @@ class TestDisplayGenAiAdvice(unittest.TestCase):
 class TestDisplayRecentWorkouts(unittest.TestCase):
     """Tests the display_recent_workouts function."""
 
-    def test_foo(self):
-        """Tests foo."""
-        pass
+    def setUp(self):
+        self.result = display_recent_workouts(
+            [{
+                'workout_id': 'workout0', 
+                'start_timestamp': '2024-01-01 00:00:00', 
+                'end_timestamp': '2024-01-01 00:30:00', 
+                'start_lat_lng': (1.46, 4.95), 
+                'end_lat_lng': (1.79, 4.99), 
+                'distance': 0.3, 
+                'steps': 19452, 
+                'calories_burned': 62
+                }]
+        )[0]
 
+    def test_all_keys_present(self):    
+        """Checks if all keys are presesnt in the data."""
+        for key in ['WORKOUT_NAME', 'CALORIES_BURNED', 'START_TIME', 'END_TIME', 'STEPS', 'DISTANCE']:
+            self.assertIn(key, self.result)
+
+
+    def test_workout_name(self):
+        """Checks if workout name is the workout id."""
+        self.assertEqual(self.result['WORKOUT_NAME'], 'workout0')
+
+    def test_calories_burned(self):
+        """Checks if calories burned is correct."""
+        self.assertEqual(self.result['CALORIES_BURNED'], 62)
+
+    def test_start_time(self):
+        """Checks if start time is correct."""
+        self.assertEqual(self.result['START_TIME'], '00:00:00')
+
+    def test_end_time(self):
+        """Checks if end time is correct."""
+        self.assertEqual(self.result['END_TIME'], '00:30:00')
+
+    def test_steps(self):
+        """Checks if steps is correct."""
+        self.assertEqual(self.result['STEPS'], 19452)
+
+    def test_distance(self):
+        """Checks if distance is correct."""
+        self.assertEqual(self.result['DISTANCE'], 0.3)
 
 if __name__ == "__main__":
     unittest.main()
