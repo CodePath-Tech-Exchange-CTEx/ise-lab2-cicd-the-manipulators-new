@@ -119,11 +119,11 @@ class TestDisplayRecentWorkouts(unittest.TestCase):
 
     def test_start_time(self):
         """Checks if start time is correct."""
-        self.assertEqual(self.result['START_TIME'], '2024-01-01 00:00:00')
+        self.assertEqual(self.result['START_TIME'], '00:00:00')
 
     def test_end_time(self):
         """Checks if end time is correct."""
-        self.assertEqual(self.result['END_TIME'], '2024-01-01 00:30:00')
+        self.assertEqual(self.result['END_TIME'], '00:30:00')
 
     def test_steps(self):
         """Checks if steps is correct."""
