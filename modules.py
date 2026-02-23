@@ -106,7 +106,7 @@ def display_recent_workouts(workouts_list):
     data = {
         "TITLE" : "RECENT WORKOUTS"
     }
-    create_component(data, html_file_name, height=100)
+    create_component(data, html_file_name)
 
     html_file_name = "display_recent_workouts"
 
@@ -116,13 +116,13 @@ def display_recent_workouts(workouts_list):
         data = {
             'WORKOUT_NAME': workout['workout_id'],
             'CALORIES_BURNED': workout['calories_burned'],
-            'START_TIME': workout['start_timestamp'],
-            'END_TIME': workout['end_timestamp'],
+            'START_TIME': workout['start_timestamp'][11:],
+            'END_TIME': workout['end_timestamp'][11:],
             'STEPS': workout['steps'],
             'DISTANCE': workout['distance']
         }
         data_list.append(data)
-        create_component(data, html_file_name, height=150)
+        create_component(data, html_file_name)
 
     return data_list
 
