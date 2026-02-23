@@ -43,6 +43,11 @@ def display_post_page():
             post_image=post['image'] # Line written by Claude
         ) # Line written by Claude
 
+def display_recent_workouts_page():
+    """Displays the recent workouts page."""
+    workouts = get_user_workouts(userId) 
+    display_recent_workouts(workouts) 
+
 # This is the starting point for your app. You do not need to change these lines
 if __name__ == '__main__':
     display_app_page()
