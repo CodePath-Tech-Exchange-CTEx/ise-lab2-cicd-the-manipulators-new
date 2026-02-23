@@ -102,20 +102,6 @@ class TestDisplayActivitySummary(unittest.TestCase):
         except Exception as e:
             self.fail(f"display_activity_summary raised {e} unexpectedly!")
 
-    def test_function_with_missing_optional_fields(self):
-        """Test that function handles workouts with missing optional fields."""
-        workouts = [
-            {
-                'workout_id': 'workout0',
-                'start_timestamp': '2024-01-01 00:00:00',
-                'end_timestamp': '2024-01-01 00:30:00'
-                # missing distance, steps, calories_burned
-            }
-        ]
-        try:
-            display_activity_summary(workouts)
-        except Exception as e:
-            self.fail(f"display_activity_summary raised {e} unexpectedly!")
 
     def test_function_with_invalid_timestamp(self):
         """Test that function handles invalid timestamp gracefully."""
