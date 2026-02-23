@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+      font-family: Arial, sans-serif; 
+      background-color: white; 
+      color: black; 
+      padding: 20px;
+      line-height: 1.4;
+    }
+    .header { 
+      text-align: center; 
+      font-size: 24px; 
+      font-weight: bold; 
+      margin-bottom: 5px; 
+      text-transform: uppercase;
+    }
+    .date { 
+      text-align: center; 
+      color: #666; 
+      font-size: 14px; 
+      margin-bottom: 30px; 
+    }
+    
+    .summary-row { 
+      display: flex; 
+      justify-content: space-around; 
+      margin-bottom: 40px; 
+    }
+    .circle { 
+      width: 90px; 
+      height: 90px; 
+      background-color: black; 
+      color: white; 
+      border-radius: 50%; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .workouts-container { 
+      border: 2px solid black; 
+      padding: 20px; 
+      background-color: white;
+    }
+    .workouts-header { 
+      font-size: 18px; 
+      font-weight: bold; 
+      border-bottom: 2px solid black; 
+      padding-bottom: 10px; 
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    
+    .workout-item {
+      border: 1px solid #000;
+      padding: 15px;
+      margin-bottom: 15px;
+      background-color: white;
+    }
+    .workout-item:last-child {
+      margin-bottom: 0;
+    }
+    .workout-id {
+      font-weight: bold;
+      font-size: 15px;
+      margin-bottom: 15px;
+    }
+    .workout-item div:not(.workout-id) {
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">Progress</div>
+  <div class="date">{{DATE}}</div>
+
+  <div class="summary-row">
+    <div class="circle"><strong>{{TOTAL_DISTANCE}} mi</strong></div>
+    <div class="circle">Cal: {{TOTAL_CALORIES}}</div>
+    <div class="circle">Steps:<br>{{TOTAL_STEPS}}</div>
+  </div>
+
+  <div class="workouts-container">
+    <div class="workouts-header">Workouts</div>
+    {{WORKOUT_LIST}}
+  </div>
+</body>
+</html>
