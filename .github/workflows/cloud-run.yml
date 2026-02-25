@@ -11,7 +11,7 @@ on:
 
 env:
   # TODO: Paste output from setup.sh below.
-  PROJECT_ID: 'jesus-munoz-ute'
+  PROJECT_ID: 'jesus-munoz-utep'
   SERVICE_NAME: 'ise-lab2-cicd-the-manipulators-new'
   SERVICE_REGION: 'us-central1'
   SERVICE_ACCOUNT: '470475185603-compute@developer.gserviceaccount.com'
