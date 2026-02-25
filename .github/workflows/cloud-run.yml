@@ -45,21 +45,21 @@ jobs:
         project_id: '${{ env.PROJECT_ID }}'
         version: '>= 363.0.0'
 
-    - name: 'Configure docker for Artifact Registry'
-      run: 'gcloud auth configure-docker ${{ env.SERVICE_REGION }}-docker.pkg.dev'
+    - name: 'Configure docker for GCP'
+      run: 'gcloud auth configure-docker'
 
     - name: 'Build and push Docker image'
       uses: 'docker/build-push-action@v5'
       with:
         context: .
         push: true
-        tags: '${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}'
+        tags: 'gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}'
 
     - id: 'Deploy'
       uses: 'google-github-actions/deploy-cloudrun@v2'
       with:
         service: '${{ env.SERVICE_NAME }}'
-        image: '${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest'
+        image: 'gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest'
         region: '${{ env.SERVICE_REGION }}'
 
     - name: 'Display deployed app URL'
