@@ -9,6 +9,7 @@
 #############################################################################
 
 import random
+from google.cloud import bigquery
 
 users = {
     'user1': {
@@ -108,20 +109,42 @@ def get_user_profile(user_id):
 
 def get_user_posts(user_id):
     """Returns a list of a user's posts.
-
-    This function currently returns random data. You will re-write it in Unit 3.
+    Some data in a post may not be populated.
+    Input: user_id
+    Output: A list of posts. Each post is a dictionary with keys user_id, post_id, timestamp, content, and image.   
     """
-    content = random.choice([
-        'Had a great workout today!',
-        'The AI really motivated me to push myself further, I ran 10 miles!',
-    ])
-    return [{
-        'user_id': user_id,
-        'post_id': 'post1',
-        'timestamp': '2024-01-01 00:00:00',
-        'content': content,
-        'image': 'image_url',
-    }]
+    client = bigquery.Client()
+    
+    query = """
+        SELECT 
+            PostId,
+            AuthorId,
+            Timestamp,
+            ImageUrl,
+            Content
+        FROM `kenneth-ly-csu-fullerton.ISE.Posts`
+        WHERE AuthorId = @AuthorId
+    """
+
+    job_config = bigquery.QueryJobConfig(
+        query_parameters=[
+            bigquery.ScalarQueryParameter("AuthorId", "STRING", user_id)
+        ]
+    )
+
+    results = client.query(query, job_config=job_config).result()
+    
+    posts = []
+    for row in results:
+        posts.append({
+            'user_id': row.AuthorId,
+            'post_id': row.PostId,
+            'timestamp': row.Timestamp,
+            'content': row.Content,    # may be None
+            'image': row.ImageUrl,     # may be None
+        })
+    
+    return posts
 
 
 def get_genai_advice(user_id):

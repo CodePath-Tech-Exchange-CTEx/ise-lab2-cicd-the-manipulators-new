@@ -66,4 +66,4 @@ def display_activity_summary_page():
 
 # This is the starting point for your app. You do not need to change these lines
 if __name__ == '__main__':
-    display_activity_summary_page()
+    display_post_page()
