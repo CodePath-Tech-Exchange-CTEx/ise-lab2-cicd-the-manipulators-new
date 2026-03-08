@@ -122,7 +122,7 @@ def get_user_posts(user_id):
             Timestamp,
             ImageUrl,
             Content
-        FROM `kenneth-ly-csu-fullerton.ISE.Posts`
+        FROM `jesus-munoz-utep.ISE.Posts`
         WHERE AuthorId = @AuthorId
     """
 
