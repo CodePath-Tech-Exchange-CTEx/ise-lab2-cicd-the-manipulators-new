@@ -148,23 +148,40 @@ def get_user_posts(user_id):
 
 
 def get_genai_advice(user_id):
-    """Returns the most recent advice from the genai model.
-
-    This function currently returns random data. You will re-write it in Unit 3.
+    """Returns the most recent advice from the GenAI API model based on the user's information.
+    Images should not be populated 100% of the time.
+    Input: user_id
+    Output: A single dictionary with keys advice_id, timestamp, content, and image.
     """
-    advice = random.choice([
-        'Your heart rate indicates you can push yourself further. You got this!',
-        "You're doing great! Keep up the good work.",
-        'You worked hard yesterday, take it easy today.',
-        'You have burned 100 calories so far today!',
-    ])
-    image = random.choice([
-        'https://plus.unsplash.com/premium_photo-1669048780129-051d670fa2d1?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        None,
-    ])
+    import datetime
+    from google import genai
+    from google.genai.types import HttpOptions
+
+    # Fetch user's data to give AI context
+    workouts = get_user_workouts(user_id)
+    posts = get_user_posts(user_id)
+
+    # Build a prompt with the user data
+    prompt = f"""
+    You are a fitness coach. Based on the user's recent activity, give them short motivational advice.
+    Recent workouts: {workouts}
+    Recent posts: {posts}
+
+    Respond with either a one or two-sentence long short motivational sentence.
+    """
+
+    client = genai.Client(http_options=HttpOptions(api_version="v1"), vertexai=True, project="jesus-munoz-utep", location="us-central1")
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=prompt,
+    )
+
     return {
-        'advice_id': 'advice1',
-        'timestamp': '2024-01-01 00:00:00',
-        'content': advice,
-        'image': image,
+        'advice_id': f'advice_{user_id}_{datetime.datetime.now().timestamp()}',
+        'timestamp': str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M')),
+        'content': response.text,
+        'image': random.choice([
+            'https://plus.unsplash.com/premium_photo-1669048780129-051d670fa2d1?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            None, None,  # None twice so image is not populated 100% of the time
+        ]),
     }
