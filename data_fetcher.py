@@ -119,9 +119,45 @@ def get_user_profile(user_id):
 
     This function currently returns random data. You will re-write it in Unit 3.
     """
-    if user_id not in users:
-        raise ValueError(f'User {user_id} not found.')
-    return users[user_id]
+    client = bigquery.Client()
+
+    query = """
+        SELECT
+            Name,
+            Username,
+            DateofBirth,
+            ImageUrl
+        FROM `jesus-munoz-utep.ISE.Users`
+        WHERE UserId = @UserId
+            """
+
+    job_config = bigquery.QueryJobConfig(
+        query_parameters=[
+            bigquery.ScalarQueryParameter("UserId", "STRING", user_id)
+        ])
+
+    result = client.query(query, job_config=job_config).result()
+
+    for row in result:
+        user_profile = {
+            'full_name': row.Name,
+            'username': row.Username,
+            'date_of_birth': row.DateofBirth.strftime('%Y-%m-%d'),
+            'profile_image': row.ImageUrl,
+            'friends': []
+        }
+
+    query = """
+    SELECT column_name
+    FROM `jesus-munoz-utep.ISE.INFORMATION_SCHEMA.COLUMNS`
+    WHERE table_name = 'Friends'
+    """
+    result = client.query(query).result()
+
+    for row in result:
+        user_profile['friends'].append(row.column_name)
+    
+    return user_profile
 
 
 def get_user_posts(user_id):
