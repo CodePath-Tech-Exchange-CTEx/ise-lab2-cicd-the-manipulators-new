@@ -122,7 +122,7 @@ def get_user_posts(user_id):
             Timestamp,
             ImageUrl,
             Content
-        FROM `kenneth-ly-csu-fullerton.ISE.Posts`
+        FROM `jesus-munoz-utep.ISE.Posts`
         WHERE AuthorId = @AuthorId
     """
 
@@ -159,13 +159,13 @@ def get_friends_posts(user_id):
             p.Content,
             u.Username,
             u.ImageUrl as UserImageUrl
-        FROM `kenneth-ly-csu-fullerton.ISE.Posts` p
-        JOIN `kenneth-ly-csu-fullerton.ISE.Users` u ON u.UserId = p.AuthorId
+        FROM `jesus-munoz-utep.ISE.Posts` p
+        JOIN `jesus-munoz-utep.ISE.Users` u ON u.UserId = p.AuthorId
         WHERE p.AuthorId IN (
-            SELECT UserId2 FROM `kenneth-ly-csu-fullerton.ISE.Friends`
+            SELECT UserId2 FROM `jesus-munoz-utep.ISE.Friends`
             WHERE UserId1 = @user_id
             UNION DISTINCT
-            SELECT UserId1 FROM `kenneth-ly-csu-fullerton.ISE.Friends`
+            SELECT UserId1 FROM `jesus-munoz-utep.ISE.Friends`
             WHERE UserId2 = @user_id
         )
         ORDER BY p.Timestamp DESC
@@ -215,7 +215,7 @@ def get_genai_advice(user_id):
     Respond with either a one or two-sentence long short motivational sentence.
     """
 
-    client = genai.Client(http_options=HttpOptions(api_version="v1"), vertexai=True, project="kenneth-ly-csu-fullerton", location="us-central1")
+    client = genai.Client(http_options=HttpOptions(api_version="v1"), vertexai=True, project="jesus-munoz-utep", location="us-central1")
     response = client.models.generate_content(
         model="gemini-2.0-flash",
         contents=prompt,
