@@ -6,8 +6,9 @@
 #############################################################################
 
 import streamlit as st
+from community_page import display_community_page
 from modules import display_my_custom_component, display_post, display_genai_advice, display_activity_summary, display_recent_workouts
-from data_fetcher import get_user_posts, get_genai_advice, get_user_profile, get_user_sensor_data, get_user_workouts, get_friends_posts
+from data_fetcher import get_user_posts, get_genai_advice, get_user_profile, get_user_sensor_data, get_user_workouts
 
 userId = 'user1'
 
@@ -33,7 +34,6 @@ def display_post_page():
     """Displays the post page."""
     posts = get_user_posts(userId) # Line written by Claude
     profile = get_user_profile(userId) # Line written by Claude
-
     for post in posts: # Line written by Claude
         display_post( # Line written by Claude
             username=profile['username'], # Line written by Claude
@@ -50,7 +50,7 @@ def display_activity_summary_page():
  
     # Pass that data into your UI module function
     display_activity_summary(user_workouts)
-    
+
 def display_recent_workouts_page():
     """Displays the recent workouts page."""
     workouts = get_user_workouts(userId) 
