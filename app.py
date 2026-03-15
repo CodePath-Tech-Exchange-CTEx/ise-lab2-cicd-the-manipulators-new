@@ -7,7 +7,7 @@
 
 import streamlit as st
 from modules import display_my_custom_component, display_post, display_genai_advice, display_activity_summary, display_recent_workouts
-from data_fetcher import get_user_posts, get_genai_advice, get_user_profile, get_user_sensor_data, get_user_workouts
+from data_fetcher import get_user_posts, get_genai_advice, get_user_profile, get_user_sensor_data, get_user_workouts, get_friends_posts
 
 userId = 'user1'
 
@@ -43,6 +43,36 @@ def display_post_page():
             post_image=post['image'] # Line written by Claude
         ) # Line written by Claude
 
+def display_community_page():
+    """Displays the community feed - friends' posts + GenAI advice."""
+    st.title('Community Feed')
+
+    # --- Friends' Posts ---
+    st.subheader("What your friends are up to")
+    posts = get_friends_posts(userId)  # uses the hardcoded userId at the top
+
+    if not posts:
+        st.info("No posts from friends yet!")
+    else:
+        for post in posts:
+            display_post(
+                username=post['username'],
+                user_image=post['user_image'],
+                timestamp=post['timestamp'],
+                content=post['content'],
+                post_image=post['image']
+            )
+
+    # --- GenAI Advice ---
+    st.divider()
+    st.subheader("Your AI Health Tip")
+    advice = get_genai_advice(userId)
+    display_genai_advice(
+        timestamp=advice['timestamp'],
+        content=advice['content'],
+        image=advice['image']
+    )
+
 def display_activity_summary_page():
     """Displays the progress summary and workout list page."""
     #Fetch the data from your data_fetcher
@@ -66,4 +96,4 @@ def display_activity_summary_page():
 
 # This is the starting point for your app. You do not need to change these lines
 if __name__ == '__main__':
-    display_post_page()
+    display_community_page()
