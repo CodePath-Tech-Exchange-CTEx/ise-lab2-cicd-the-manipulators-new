@@ -146,6 +146,51 @@ def get_user_posts(user_id):
     
     return posts
 
+def get_friends_posts(user_id):
+    """Fetches the 10 most recent posts from a user's friends."""
+    client = bigquery.Client()
+    
+    query = """
+        SELECT 
+            p.PostId,
+            p.AuthorId,
+            p.Timestamp,
+            p.ImageUrl,
+            p.Content,
+            u.Username,
+            u.ImageUrl as UserImageUrl
+        FROM `jesus-munoz-utep.ISE.Posts` p
+        JOIN `jesus-munoz-utep.ISE.Users` u ON u.UserId = p.AuthorId
+        WHERE p.AuthorId IN (
+            SELECT UserId2 FROM `jesus-munoz-utep.ISE.Friends`
+            WHERE UserId1 = @user_id
+            UNION DISTINCT
+            SELECT UserId1 FROM `jesus-munoz-utep.ISE.Friends`
+            WHERE UserId2 = @user_id
+        )
+        ORDER BY p.Timestamp DESC
+        LIMIT 10
+    """
+    
+    job_config = bigquery.QueryJobConfig(
+        query_parameters=[
+            bigquery.ScalarQueryParameter("user_id", "STRING", user_id)
+        ]
+    )
+    
+    results = client.query(query, job_config=job_config).result()
+    
+    posts = []
+    for row in results:
+        posts.append({
+            'username': row.Username,
+            'user_image': row.UserImageUrl,
+            'timestamp': row.Timestamp,
+            'content': row.Content,
+            'image': row.ImageUrl
+        })
+    
+    return posts
 
 def get_genai_advice(user_id):
     """Returns the most recent advice from the GenAI API model based on the user's information.
