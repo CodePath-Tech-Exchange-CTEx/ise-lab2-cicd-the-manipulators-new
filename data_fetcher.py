@@ -122,7 +122,7 @@ def get_user_posts(user_id):
             Timestamp,
             ImageUrl,
             Content
-        FROM `jesus-munoz-utep.ISE.Posts`
+        FROM `kenneth-ly-csu-fullerton.ISE.Posts`
         WHERE AuthorId = @AuthorId
     """
 
@@ -146,6 +146,51 @@ def get_user_posts(user_id):
     
     return posts
 
+def get_friends_posts(user_id):
+    """Fetches the 10 most recent posts from a user's friends."""
+    client = bigquery.Client()
+    
+    query = """
+        SELECT 
+            p.PostId,
+            p.AuthorId,
+            p.Timestamp,
+            p.ImageUrl,
+            p.Content,
+            u.Username,
+            u.ImageUrl as UserImageUrl
+        FROM `kenneth-ly-csu-fullerton.ISE.Posts` p
+        JOIN `kenneth-ly-csu-fullerton.ISE.Users` u ON u.UserId = p.AuthorId
+        WHERE p.AuthorId IN (
+            SELECT UserId2 FROM `kenneth-ly-csu-fullerton.ISE.Friends`
+            WHERE UserId1 = @user_id
+            UNION DISTINCT
+            SELECT UserId1 FROM `kenneth-ly-csu-fullerton.ISE.Friends`
+            WHERE UserId2 = @user_id
+        )
+        ORDER BY p.Timestamp DESC
+        LIMIT 10
+    """
+    
+    job_config = bigquery.QueryJobConfig(
+        query_parameters=[
+            bigquery.ScalarQueryParameter("user_id", "STRING", user_id)
+        ]
+    )
+    
+    results = client.query(query, job_config=job_config).result()
+    
+    posts = []
+    for row in results:
+        posts.append({
+            'username': row.Username,
+            'user_image': row.UserImageUrl,
+            'timestamp': row.Timestamp,
+            'content': row.Content,
+            'image': row.ImageUrl
+        })
+    
+    return posts
 
 def get_genai_advice(user_id):
     """Returns the most recent advice from the GenAI API model based on the user's information.
@@ -170,7 +215,7 @@ def get_genai_advice(user_id):
     Respond with either a one or two-sentence long short motivational sentence.
     """
 
-    client = genai.Client(http_options=HttpOptions(api_version="v1"), vertexai=True, project="jesus-munoz-utep", location="us-central1")
+    client = genai.Client(http_options=HttpOptions(api_version="v1"), vertexai=True, project="kenneth-ly-csu-fullerton", location="us-central1")
     response = client.models.generate_content(
         model="gemini-2.0-flash",
         contents=prompt,
