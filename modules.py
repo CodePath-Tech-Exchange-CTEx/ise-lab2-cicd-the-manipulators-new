@@ -64,7 +64,7 @@ def display_post(username, user_image, timestamp, content, post_image):
     } # Line written by Claude
 
     html_file_name = "display_post" # Line written by Claude
-    create_component(data, html_file_name, height=450) # Line written by Claude
+    create_component(data, html_file_name, height=280) # Line written by Claude
     return data # Line written by Claude
 
 
