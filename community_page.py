@@ -1,10 +1,7 @@
-# First 10 posts from a user’s friends ordered by timestamp
-# One piece of GenAI advice and encouragement
-# jesus-munoz-utep.ISE.Posts
-
 #############################################################################
 # community_page.py
-#
+# Displays 10 most recent posts from friends
+# Displays 1 GenAI advice
 # This file contains the community feed page of the app.
 #############################################################################
 
