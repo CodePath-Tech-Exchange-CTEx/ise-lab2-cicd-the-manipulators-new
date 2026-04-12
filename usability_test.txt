@@ -1,0 +1,69 @@
+Usability testing for Challenges
+
+User personas:
+Persona : Caleb, 29, A competitive gym member
+• Background: Caleb is a gym lover who loves competing with his fellow gym members
+• Goals: Effectively compete with his gym lovers by comparing the intensity and amount of 
+his completed workout sessions with his friends
+• Frustrations: Too easy challenges, Bad metrics for measuring and comparing his 
+workouts to his friends
+
+Test tasks:
+o Task: Complete the 3-Day Pushup Challenge ? (5 secs)
+o Task: Complete the 10 km run Challenge ? (5 secs)
+
+Success criteria:
+• Did the participants complete the tasks succesfully within the time frame ?
+• How long did each participant spend ?
+• Is their average satisfaction rating above 4 out of 5
+
+Test environment:
+• The test will be conducted in the college dorm lobby
+• The moderator will sit silent next to the participant, Only speaking to tell user tasks 
+Test Process for User Persona Caleb
+
+Participant Introduction:
+The moderator briefly introduced him self and his app testing. Then the moderator told his user 
+his personality: Caleb, a 29 year old competitive gym member who loves competing
+Task
+• The moderator introduced user to this scenario “You just completed the “3-Days
+Challenge: 100 Pushups and Your goal is to ensure the app recognizes you have 
+completed the work out app. You clicked on the app and went into challenges”.
+• Then the moderator showed the screen:
+• The Instruction: The moderator reminded the user about the task and instructed the 
+user speak his thought process.
+• Moderator Role: Sat slightly behind/beside them. Only speak to provide the next task or 
+to prompted interviewee with "What are you thinking right now?" when they went 
+silent.
+
+Notes:
+The user was initially confused by the paper prototype, not the UI
+Then the user recognized the app structure
+The user then looked through the screen for 5 seconds and clicked on the button “Complete.”
+The user was not confused and clearly demonstrated a sense of familiarity and ease of use with 
+the app
+
+Feedback
+o How easy/hard was it to complete the task given?
+“Task was easy. “
+o What confusions were there? Why were they confused?
+“No confusions, Task was easy the app was very simple and easy to use.”
+o What could be improved?
+”I don’t think it needs any improvements”
+
+Result:
+During the first 10 seconds, the user was quiet, however I noticed he was confused by the paper 
+prototype, not the UI, because after I clarified that was the phone, he navigated through the 
+app seamlessly.
+During the second task – to complete his second challenge – the user was presented the phone 
+with the pop up message, from the previously completed challenge, covering the bottom half 
+and the user though to escape it by clicking on a back button that supposed to take him to the 
+home screen.
+Hyothesis: The user assumed the visible back button would remove the pop up message, which 
+is probably why he clicked it, instead, he could have clicked anywhere on the screen to remove 
+the pop up message. 
+Fix, as the notification message pops up, gray out or make the original Challenge screen unclear, 
+to give a sense that tuser could touch anywhere on the screen to cancel the pop up message
+Also, Im going to add shadow around each of the challenges and the complete button to make 
+button more visible and each challenge attract attention of user
+
