@@ -1,0 +1,67 @@
+﻿Usability testing for Challenges 
+User personas: 
+Persona 1: Jimmy, 22, An occasional runner who wants to get consistent with running goals while being busy with college
+o Background: Jimmy is a full-time college student who wants to train for a marathon.
+o Goals: Understand how much he has run, where he needs to be in terms of distance and how will he get there 
+o Frustrations: Not knowing if he is on track with distance and properly training on a consistent pattern / routine 
+Test tasks: 
+o Task: Navigate the home page (Look for buttons like tabs) (5 secs) 
+o Task: Navigate to the analytics tab and remember how to get back to the main page and where to see posts (5 secs) 
+Success criteria: 
+• Did the participants complete the tasks successfully within the time frame? 
+• How long did each participant spend ? 
+• Is their average satisfaction rating above 4 out of 5 ?
+• Is navigation easy? 4 out of 5 accessibility rating?
+Test environment: 
+• The test will be conducted virtually over discord 
+• The moderator will share their screen and the user will evaluate the page and tell the moderator their thoughts out loud
+Test Process for User Persona Caleb 
+Participant Introduction:
+The moderator briefly introduced himself and his app testing. Then the moderator told his user  his personality: Jimmy, 22, An occasional runner who wants to get consistent with running goals while being busy with college 
+Task 
+• The moderator introduced user to this scenario “You just logged into your health app. You are interested in seeing what your predicted stats will be by the end of the week. Where do you navigate to?”. 
+• Then the moderator showed the screen: 
+  
+
+
+
+• The Instruction: The moderator reminded the user about the task and instructed the  user speak his thought process. 
+• Moderator Role: Only speak to provide the next task or  to prompt the interviewee with "What are you thinking right now,” and to “think out loud.”
+
+
+
+
+
+
+
+
+Notes: 
+The user believes the AI Health Tip should be prioritized over community feed. 
+User does not understand what “risk day” would mean.
+Assumes the user sets the goal so goal should be listed as opposed to just “Goal ETA.”
+Feedback 
+o How easy/hard was it to complete the task given? 
+“Task was easy. Not too difficult“ 
+o What confusions were there? Why were they confused? 
+“Confused about risk day, the reload button as to why it is there and the Goal ETA not being specified to remind the user what their goal is.”
+o What could be improved? 
+”Specifying the goal / reminding the user the goal.”
+“AI Health Tip should be above the Community Feed as a Health App”
+“Specify Risk Day, what that means” 
+Result: 
+As I showed the screen to my user. I let the user evaluate and analyze the screen as he thought out loud about the app. Immediately he noticed that the Community Feed should be below the AI Health Tip since it is a health app and would prefer viewing the health tip first upon opening the website. 
+During the second evaluation of the analytics tab he realizes he has questions about what a “risk day” is and that it is vague and he does not understand it. He also realizes that the goal ETA should be specified and remind the user on what it is as opposed to just saying “Goal ETA” and inserting the time.
+
+
+Hyothesis: The user assumed the visible back button would remove the pop up message, which  is probably why he clicked it, instead, he could have clicked anywhere on the screen to remove  the pop up message.  
+Fix, as the notification message pops up, gray out or make the original Challenge screen unclear,  to give a sense that tuser could touch anywhere on the screen to cancel the pop up message 
+Also, Im going to add shadow around each of the challenges and the complete button to make  button more visible and each challenge attract attention of user 
+Updates
+
+
+  
+
+
+
+* We have input a Goal section to remind the user of the goal. 
+* Along with that we have a Risk Analysis right under Risk Day so that the user understands what a Risk day is and why it is a risk day.
