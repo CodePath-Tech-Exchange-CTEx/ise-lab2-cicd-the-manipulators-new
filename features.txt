@@ -2,3 +2,10 @@ feature: challenges
 tasks:
     - Create a mock up for challenges (2)
     - Implement challenges (2)
+
+feature: predictive analytics
+tasks:
+    - Create a mockup for predictive analytics page (2)
+    - Utilize GenAI to create predictive analytics (3)
+    - Create Frontend page to display predictive analytics (2)
+    - Create refresh button on frontend page to reprompt GenAI with a cooldown (1)
