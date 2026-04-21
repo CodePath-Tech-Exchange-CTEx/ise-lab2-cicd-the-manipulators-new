@@ -13,7 +13,14 @@ userId = 'user1'
 
 def display_community_page():
     """Displays the community feed - friends' posts + GenAI advice."""
-    st.set_page_config(layout="wide")
+    st.markdown("""
+    <style>
+      .stApp { background-color: #FFFFFF; }
+      #MainMenu, footer, header { visibility: hidden; }
+      h1 { color: #000000 !important ; }
+      h2, [data-testid="stHeading"] { color: #000000 !important; }
+    </style>
+    """, unsafe_allow_html=True)
     st.title('Community Feed')
 
     st.subheader("What your friends are up to")
