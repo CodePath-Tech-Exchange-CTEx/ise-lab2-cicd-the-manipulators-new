@@ -13,8 +13,6 @@ FAKE_USER_ID = 'user1'
 
 
 def display_login_page():
-    st.set_page_config(layout="centered", page_title="Sign In")
-
     st.markdown(
         """
         <link rel="preconnect" href="https://fonts.googleapis.com">

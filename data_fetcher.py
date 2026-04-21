@@ -11,38 +11,6 @@
 import random
 from google.cloud import bigquery
 
-users = {
-    'user1': {
-        'full_name': 'Remi',
-        'username': 'remi_the_rems',
-        'date_of_birth': '1990-01-01',
-        'profile_image': 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Puma_shoes.jpg',
-        'friends': ['user2', 'user3', 'user4'],
-    },
-    'user2': {
-        'full_name': 'Blake',
-        'username': 'blake',
-        'date_of_birth': '1990-01-01',
-        'profile_image': 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Puma_shoes.jpg',
-        'friends': ['user1'],
-    },
-    'user3': {
-        'full_name': 'Jordan',
-        'username': 'jordanjordanjordan',
-        'date_of_birth': '1990-01-01',
-        'profile_image': 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Puma_shoes.jpg',
-        'friends': ['user1', 'user4'],
-    },
-    'user4': {
-        'full_name': 'Gemmy',
-        'username': 'gems',
-        'date_of_birth': '1990-01-01',
-        'profile_image': 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Puma_shoes.jpg',
-        'friends': ['user1', 'user3'],
-    },
-}
-
-
 def get_user_sensor_data(user_id, workout_id):
     """Returns a list of timestampped information for a given workout.
 
@@ -87,7 +55,7 @@ def get_user_workouts(user_id):
             TotalDistance,
             TotalSteps,
             CaloriesBurned
-        FROM `jesus-munoz-utep.ISE.Workouts`
+        FROM `kenneth-ly-csu-fullerton.ISE.Workouts`
         WHERE UserId = @UserId
         """
             
@@ -127,7 +95,7 @@ def get_user_profile(user_id):
             Username,
             DateofBirth,
             ImageUrl
-        FROM `jesus-munoz-utep.ISE.Users`
+        FROM `kenneth-ly-csu-fullerton.ISE.Users`
         WHERE UserId = @UserId
             """
 
@@ -149,7 +117,7 @@ def get_user_profile(user_id):
 
     query = """
     SELECT column_name
-    FROM `jesus-munoz-utep.ISE.INFORMATION_SCHEMA.COLUMNS`
+    FROM `kenneth-ly-csu-fullerton.ISE.INFORMATION_SCHEMA.COLUMNS`
     WHERE table_name = 'Friends'
     """
     result = client.query(query).result()
@@ -175,7 +143,7 @@ def get_user_posts(user_id):
             Timestamp,
             ImageUrl,
             Content
-        FROM `jesus-munoz-utep.ISE.Posts`
+        FROM `kenneth-ly-csu-fullerton.ISE.Posts`
         WHERE AuthorId = @AuthorId
     """
 
@@ -212,13 +180,13 @@ def get_friends_posts(user_id):
             p.Content,
             u.Username,
             u.ImageUrl as UserImageUrl
-        FROM `jesus-munoz-utep.ISE.Posts` p
-        JOIN `jesus-munoz-utep.ISE.Users` u ON u.UserId = p.AuthorId
+        FROM `kenneth-ly-csu-fullerton.ISE.Posts` p
+        JOIN `kenneth-ly-csu-fullerton.ISE.Users` u ON u.UserId = p.AuthorId
         WHERE p.AuthorId IN (
-            SELECT UserId2 FROM `jesus-munoz-utep.ISE.Friends`
+            SELECT UserId2 FROM `kenneth-ly-csu-fullerton.ISE.Friends`
             WHERE UserId1 = @user_id
             UNION DISTINCT
-            SELECT UserId1 FROM `jesus-munoz-utep.ISE.Friends`
+            SELECT UserId1 FROM `kenneth-ly-csu-fullerton.ISE.Friends`
             WHERE UserId2 = @user_id
         )
         ORDER BY p.Timestamp DESC
@@ -246,40 +214,54 @@ def get_friends_posts(user_id):
     return posts
 
 def get_genai_advice(user_id):
-    """Returns the most recent advice from the GenAI API model based on the user's information.
-    Images should not be populated 100% of the time.
-    Input: user_id
-    Output: A single dictionary with keys advice_id, timestamp, content, and image.
-    """
     import datetime
     from google import genai
     from google.genai.types import HttpOptions
 
-    # Fetch user's data to give AI context
+    image_options = {
+        'running': 'https://images.unsplash.com/photo-1571008887538-b36bb32f4571',
+        'weightlifting': 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48',
+        'yoga': 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b',
+        'cycling': 'https://images.unsplash.com/photo-1541625602330-2277a4c46182',
+        'general_fitness': 'https://plus.unsplash.com/premium_photo-1669048780129-051d670fa2d1',
+    }
+
     workouts = get_user_workouts(user_id)
     posts = get_user_posts(user_id)
 
-    # Build a prompt with the user data
     prompt = f"""
     You are a fitness coach. Based on the user's recent activity, give them short motivational advice.
     Recent workouts: {workouts}
     Recent posts: {posts}
 
-    Respond with either a one or two-sentence long short motivational sentence.
+    Respond in this EXACT format and nothing else:
+    ADVICE: <one or two sentence motivational advice>
+    IMAGE: <one of: running, weightlifting, yoga, cycling, general_fitness>
+
+    Pick the IMAGE key that best matches the advice or workout type. Do not explain the image choice.
     """
 
-    client = genai.Client(http_options=HttpOptions(api_version="v1"), vertexai=True, project="jesus-munoz-utep", location="us-central1")
+    client = genai.Client(http_options=HttpOptions(api_version="v1"), vertexai=True, project="kenneth-ly-csu-fullerton", location="us-central1")
     response = client.models.generate_content(
         model="gemini-2.0-flash",
         contents=prompt,
     )
 
+    # Parse the response
+    advice_text = ''
+    image_key = 'general_fitness'  # default fallback
+
+    for line in response.text.strip().splitlines():
+        if line.startswith('ADVICE:'):
+            advice_text = line.replace('ADVICE:', '').strip().replace("\\'", "'")
+        elif line.startswith('IMAGE:'):
+            key = line.replace('IMAGE:', '').strip().lower()
+            if key in image_options:
+                image_key = key
+
     return {
         'advice_id': f'advice_{user_id}_{datetime.datetime.now().timestamp()}',
         'timestamp': str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M')),
-        'content': response.text,
-        'image': random.choice([
-            'https://plus.unsplash.com/premium_photo-1669048780129-051d670fa2d1?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            None, None,  # None twice so image is not populated 100% of the time
-        ]),
+        'content': advice_text,
+        'image': image_options[image_key],
     }

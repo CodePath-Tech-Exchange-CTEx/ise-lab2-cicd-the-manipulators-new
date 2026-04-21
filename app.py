@@ -7,6 +7,7 @@
 
 import streamlit as st
 from community_page import display_community_page
+from login_page import display_login_page, FAKE_USER_ID
 from modules import display_my_custom_component, display_post, display_genai_advice, display_activity_summary, display_recent_workouts
 from data_fetcher import get_user_posts, get_genai_advice, get_user_profile, get_user_sensor_data, get_user_workouts
 
@@ -67,4 +68,67 @@ def display_activity_summary_page():
 
 # This is the starting point for your app. You do not need to change these lines
 if __name__ == '__main__':
-    display_community_page()
+    st.set_page_config(layout="wide", page_title="SDS")
+
+    if not st.session_state.get('logged_in'):
+        display_login_page()
+    else:
+        st.markdown("""
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+        <style>
+          /* Collapse Streamlit's header so the navbar sits flush at the very top */
+          header[data-testid="stHeader"] {
+            height: 0 !important;
+            min-height: 0 !important;
+            padding: 0 !important;
+          }
+          /* Push page content below the fixed navbar */
+          .block-container {
+            padding-top: 90px !important;
+          }
+          /* Fixed navbar */
+          .fixed-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: #DFDFDF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 14px 24px;
+            border-bottom: 6px solid #2b2b2b;
+          }
+          .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 140px;
+            padding: 14px 28px;
+            background: #C0DCFF;
+            border: none;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #111111;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+          }
+          .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          }
+          .nav-btn.active {
+            background: #a8ccf5;
+          }
+        </style>
+        <nav class="fixed-navbar">
+          <button class="nav-btn active">Home</button>
+          <button class="nav-btn">Challenges</button>
+          <button class="nav-btn">Analytics</button>
+        </nav>
+        """, unsafe_allow_html=True)
+        display_community_page()
