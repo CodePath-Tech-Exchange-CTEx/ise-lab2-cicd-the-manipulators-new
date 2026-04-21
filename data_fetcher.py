@@ -248,12 +248,12 @@ def get_genai_advice(user_id):
     )
 
     # Parse the response
-    advice_text = ''
-    image_key = 'general_fitness'  # default fallback
+    advice_text = response.text.strip()  # fallback: use full response if no ADVICE: prefix
+    image_key = 'general_fitness'
 
     for line in response.text.strip().splitlines():
         if line.startswith('ADVICE:'):
-            advice_text = line.replace('ADVICE:', '').strip().replace("\\'", "'")
+            advice_text = line.replace('ADVICE:', '').strip().replace('\\', '')
         elif line.startswith('IMAGE:'):
             key = line.replace('IMAGE:', '').strip().lower()
             if key in image_options:
@@ -263,5 +263,8 @@ def get_genai_advice(user_id):
         'advice_id': f'advice_{user_id}_{datetime.datetime.now().timestamp()}',
         'timestamp': str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M')),
         'content': advice_text,
-        'image': image_options[image_key],
+        'image': random.choice([
+            image_options[image_key],
+            None, None,  # None twice so image is not populated 100% of the time
+        ]),
     }
