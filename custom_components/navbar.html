@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #dcdcdc;
+    }
+
+    /* ── Top accent strip ───────────────────────────────────────────────── */
+    .top-strip {
+      width: 100%;
+      height: 6px;
+      background: #2b2b2b;
+    }
+
+    /* ── Nav bar ────────────────────────────────────────────────────────── */
+    .navbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      padding: 18px 24px;
+      background: #dcdcdc;
+    }
+
+    /* ── Nav button ─────────────────────────────────────────────────────── */
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 140px;
+      padding: 14px 28px;
+      background: #b8c8e0;
+      border: none;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #111111;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Active page — slightly deeper blue to indicate current location */
+    .nav-btn.active {
+      background: #8aadd4;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-strip"></div>
+  <nav class="navbar">
+    <button class="nav-btn {{HOME_ACTIVE}}">Home</button>
+    <button class="nav-btn {{CHALLENGES_ACTIVE}}">Challenges</button>
+    <button class="nav-btn {{ANALYTICS_ACTIVE}}">Analytics</button>
+  </nav>
+</body>
+</html>
