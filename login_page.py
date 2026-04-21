@@ -15,7 +15,6 @@ FAKE_USER_ID = 'user1'
 def display_login_page():
     st.set_page_config(layout="centered", page_title="Sign In")
 
-    # ── Inject fonts + all CSS first, in its own isolated markdown call ──
     st.markdown(
         """
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +27,7 @@ def display_login_page():
         """
         <style>
         .stApp {
-            background-color: #1a1a1a;
+            background-color: #FFFFFF;
         }
 
         #MainMenu, footer, header { visibility: hidden; }
@@ -43,18 +42,19 @@ def display_login_page():
         }
 
         .login-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: #FFFFFF;
+            border: 1px solid #DFDFDF;
             border-radius: 12px;
             padding: 40px 36px 28px 36px;
             font-family: 'DM Sans', sans-serif;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         }
 
         .card-title {
             font-family: 'DM Serif Display', serif;
             font-style: italic;
             font-size: 1.8rem;
-            color: rgba(255, 255, 255, 0.93);
+            color: #1a1a1a;
             margin-bottom: 28px;
             text-align: center;
         }
@@ -67,7 +67,7 @@ def display_login_page():
             font-family: 'DM Sans', sans-serif;
             font-size: 0.8rem;
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.6);
+            color: #666666;
             margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.06em;
@@ -76,9 +76,9 @@ def display_login_page():
         .field-display {
             font-family: 'DM Sans', sans-serif;
             font-size: 1rem;
-            color: rgba(255, 255, 255, 0.93);
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: #1a1a1a;
+            background: #F7F7F7;
+            border: 1px solid #DFDFDF;
             border-radius: 6px;
             padding: 12px 14px;
             width: 100%;
@@ -86,7 +86,7 @@ def display_login_page():
         }
 
         .stButton > button {
-            background-color: #f08080 !important;
+            background-color: #C0DCFF !important;
             color: #1a1a1a !important;
             font-family: 'DM Sans', sans-serif !important;
             font-weight: 600 !important;
@@ -101,13 +101,13 @@ def display_login_page():
         }
 
         .stButton > button:hover {
-            background-color: #d96060 !important;
+            background-color: #a8ccf5 !important;
             border: none !important;
         }
 
         .success-card {
-            background: rgba(240, 128, 128, 0.12);
-            border: 1px solid rgba(240, 128, 128, 0.35);
+            background: rgba(192, 220, 255, 0.2);
+            border: 1px solid #C0DCFF;
             border-radius: 12px;
             padding: 32px 36px;
             font-family: 'DM Sans', sans-serif;
@@ -118,17 +118,17 @@ def display_login_page():
             font-family: 'DM Serif Display', serif;
             font-style: italic;
             font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.93);
+            color: #1a1a1a;
             margin-bottom: 10px;
         }
 
         .success-sub {
             font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.6);
+            color: #555555;
         }
 
         .success-user {
-            color: #f08080;
+            color: #4a90d9;
             font-weight: 600;
         }
         </style>
