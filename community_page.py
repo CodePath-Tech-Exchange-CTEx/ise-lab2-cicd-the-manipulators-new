@@ -19,6 +19,7 @@ def display_community_page():
       #MainMenu, footer, header { visibility: hidden; }
       h1 { color: #000000 !important ; }
       h2, [data-testid="stHeading"] { color: #000000 !important; }
+      h3 { color: #000000 !important; }
     </style>
     """, unsafe_allow_html=True)
     st.title('Community Feed')
