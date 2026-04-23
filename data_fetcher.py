@@ -207,7 +207,7 @@ def get_friends_posts(user_id):
         posts.append({
             'username': row.Username,
             'user_image': row.UserImageUrl,
-            'timestamp': row.Timestamp,
+            'timestamp': row.Timestamp.strftime('%Y-%m-%d %H:%M') if row.Timestamp else '',
             'content': row.Content,
             'image': row.ImageUrl
         })
