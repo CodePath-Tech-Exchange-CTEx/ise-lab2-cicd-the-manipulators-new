@@ -477,7 +477,7 @@ def display_analytics(username, user_image, timestamp, workouts_list, genai_summ
     st.markdown(
         f"""
         <div class="analytics-header">
-          <div class="analytics-avatar">USER<br>IMAGE</div>
+          <img src="{user_image}" alt="{username}" style="width:64px;height:64px;border-radius:10px;object-fit:cover;border:2px solid #A8CCF5;">
           <div>
             <div class="analytics-username">{username}</div>
             <div class="analytics-timestamp">{timestamp}</div>
