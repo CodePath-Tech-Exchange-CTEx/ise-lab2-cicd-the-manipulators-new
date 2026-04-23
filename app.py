@@ -7,9 +7,12 @@
 
 import streamlit as st
 from community_page import display_community_page
+from pages.analytics import display_analytics_page
 from login_page import display_login_page, FAKE_USER_ID
 from modules import display_my_custom_component, display_post, display_genai_advice, display_activity_summary, display_recent_workouts, display_navbar
-from data_fetcher import get_user_posts, get_genai_advice, get_user_profile, get_user_sensor_data, get_user_workouts
+from data_fetcher import get_user_posts, get_genai_advice, get_user_profile, get_user_sensor_data, get_user_workouts, get_genai_analytics_summary
+from datetime import datetime
+
 
 
 def main():
@@ -32,8 +35,14 @@ def main():
           st.header("Challenges Page") # not needed
           # call display_challenges_page()
       elif st.session_state.page == "analytics":
-          st.header("Analytics Page") # not needed
-          # call display_analytics_page()
+        profile = get_user_profile(userId)
+        display_analytics_page(
+            username=profile['username'],
+            user_image=profile['profile_image'],
+            timestamp=datetime.now().strftime("%b %d, %Y"),
+            workouts_list=get_user_workouts(userId),
+            genai_summary=get_genai_analytics_summary(userId)
+        )
 
 
 
@@ -45,7 +54,7 @@ def display_app_page():
     value = st.text_input('Enter your name')
     display_my_custom_component(value)
 
-def display_genai_advice_page():
+def display_genai_advice_page(userId):
     """Displays the genai advice page."""
     advice = get_genai_advice(userId) # Line written by Claude
     display_genai_advice( # Line written by Claude
@@ -54,7 +63,7 @@ def display_genai_advice_page():
         image=advice['image'] # Line written by Claude
     ) # Line written by Claude
 
-def display_post_page():
+def display_post_page(userId):
     """Displays the post page."""
     posts = get_user_posts(userId) # Line written by Claude
     profile = get_user_profile(userId) # Line written by Claude
@@ -67,7 +76,7 @@ def display_post_page():
             post_image=post['image'] # Line written by Claude
         ) # Line written by Claude
 
-def display_activity_summary_page():
+def display_activity_summary_page(userId):
     """Displays the progress summary and workout list page."""
     #Fetch the data from your data_fetcher
     user_workouts = get_user_workouts(userId)
@@ -75,13 +84,13 @@ def display_activity_summary_page():
     # Pass that data into your UI module function
     display_activity_summary(user_workouts)
 
-def display_recent_workouts_page():
+def display_recent_workouts_page(userId):
     """Displays the recent workouts page."""
     workouts = get_user_workouts(userId) 
     display_recent_workouts(workouts) 
 
     
-def display_activity_summary_page():
+def display_activity_summary_page(userId):
     """Displays the progress summary and workout list page."""
     #Fetch the data from your data_fetcher
     user_workouts = get_user_workouts(userId)
