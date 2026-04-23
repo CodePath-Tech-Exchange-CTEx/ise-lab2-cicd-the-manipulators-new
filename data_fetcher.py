@@ -10,38 +10,7 @@
 
 import random
 from google.cloud import bigquery
-
-users = {
-    'user1': {
-        'full_name': 'Remi',
-        'username': 'remi_the_rems',
-        'date_of_birth': '1990-01-01',
-        'profile_image': 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Puma_shoes.jpg',
-        'friends': ['user2', 'user3', 'user4'],
-    },
-    'user2': {
-        'full_name': 'Blake',
-        'username': 'blake',
-        'date_of_birth': '1990-01-01',
-        'profile_image': 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Puma_shoes.jpg',
-        'friends': ['user1'],
-    },
-    'user3': {
-        'full_name': 'Jordan',
-        'username': 'jordanjordanjordan',
-        'date_of_birth': '1990-01-01',
-        'profile_image': 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Puma_shoes.jpg',
-        'friends': ['user1', 'user4'],
-    },
-    'user4': {
-        'full_name': 'Gemmy',
-        'username': 'gems',
-        'date_of_birth': '1990-01-01',
-        'profile_image': 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Puma_shoes.jpg',
-        'friends': ['user1', 'user3'],
-    },
-}
-
+import streamlit as st
 
 def get_user_sensor_data(user_id, workout_id):
     """Returns a list of timestampped information for a given workout.
@@ -277,9 +246,52 @@ def get_genai_advice(user_id):
     return {
         'advice_id': f'advice_{user_id}_{datetime.datetime.now().timestamp()}',
         'timestamp': str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M')),
-        'content': response.text,
+        'content': response.text.strip().replace("\\'", "'").replace("\'", "'"),
         'image': random.choice([
             'https://plus.unsplash.com/premium_photo-1669048780129-051d670fa2d1?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            None, None,  # None twice so image is not populated 100% of the time
+            None, None,
         ]),
     }
+
+@st.cache_data(ttl=300)
+def get_genai_analytics_summary(user_id):
+    """Returns a GenAI-generated analytics summary based on the user's workout data.
+    Input: user_id
+    Output: A dictionary with keys for all three analytics panels.
+    """
+    import datetime
+    from google import genai
+    from google.genai.types import HttpOptions
+
+    workouts = get_user_workouts(user_id)
+    profile = get_user_profile(user_id)
+
+    prompt = f"""
+    You are a fitness analytics coach. Based on the user's workout history, return a JSON object only with no markdown or backticks.
+    
+    User profile: {profile}
+    Recent workouts: {workouts}
+
+    Return exactly this JSON structure:
+    {{
+        "workouts_predicted": <int, how many workouts they will likely do this week based on their pattern>,
+        "risk_day": "<day of week they are most likely to skip>",
+        "risk_analysis": "<one sentence explaining why that day is a risk>",
+        "streak_potential": <int, how many consecutive days they could streak>,
+        "risk_alerts": ["<alert 1>", "<alert 2>"],
+        "strength_growth": "<short strength projection e.g. +10% in 3 weeks>",
+        "endurance_status": "<short endurance trend description>",
+        "goal": "<inferred fitness goal based on their activity>",
+        "eta_to_goal": "<estimated time to reach goal e.g. 5 weeks>"
+    }}
+    """
+
+    client = genai.Client(http_options=HttpOptions(api_version="v1"), vertexai=True, project="jesus-munoz-utep", location="us-central1")
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt,
+    )
+
+    import json
+    clean = response.text.strip().replace("```json", "").replace("```", "")
+    return json.loads(clean)
