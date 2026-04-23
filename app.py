@@ -54,7 +54,7 @@ def display_app_page():
     value = st.text_input('Enter your name')
     display_my_custom_component(value)
 
-def display_genai_advice_page():
+def display_genai_advice_page(userId):
     """Displays the genai advice page."""
     advice = get_genai_advice(userId) # Line written by Claude
     display_genai_advice( # Line written by Claude
