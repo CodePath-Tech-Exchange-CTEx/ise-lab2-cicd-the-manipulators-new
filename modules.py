@@ -10,6 +10,8 @@
 from internals import create_component
 from datetime import datetime #to calculate total time summary (Jesus Munoz)
 from datetime import datetime #to calculate total time summary (Jesus Munoz)
+import streamlit as st
+
 
 
 # This one has been written for you as an example. You may change it as wanted.
@@ -214,3 +216,72 @@ def display_genai_advice(timestamp, content, image):
     html_file_name = "display_genai_advice" # Line written by Claude
     create_component(data, html_file_name, height=450) # Line written by Claude
     return data # Line written by Claude
+
+def display_navbar():
+    # 1. The custom CSS to match your FIRST screenshot exactly
+    st.markdown("""
+        <style>
+            /* 1. The main Navbar container */
+            div[data-testid="stHorizontalBlock"]:has(button[kind="secondary"]) {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                background-color: #DFDFDF;
+                z-index: 9999;
+                padding: 15px 0px;
+                /* REMOVED: border-bottom: 6px solid #2b2b2b; */
+                border-bottom: none !important; /* Forces the line to disappear */
+                display: flex;
+                justify-content: center;
+            }
+
+            /* 2. The Buttons */
+            div[data-testid="stHorizontalBlock"] button[kind="secondary"] {
+                background-color: #C0DCFF !important;
+                color: #111111 !important;
+                border: none !important;        /* Removes the button's own border */
+                outline: none !important;       /* Removes the focus outline */
+                border-radius: 12px !important;
+                font-family: 'DM Sans', sans-serif !important;
+                font-weight: 700 !important;
+                padding: 10px 20px !important;
+                min-width: 140px !important;
+                transition: background-color 0.2s ease !important;
+                box-shadow: none !important;    /* Ensures no shadow looks like a line */
+            }
+
+            /* 3. Hover effect */
+            div[data-testid="stHorizontalBlock"] button[kind="secondary"]:hover {
+                background-color: #A8CCF5 !important;
+                border: none !important;
+            }
+
+            /* 4. Spacing for page content */
+            .main .block-container {
+                padding-top: 80px !important;
+            }
+            
+            header[data-testid="stHeader"] {
+                visibility: hidden;
+                height: 0;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
+    # 2. The Layout: Use columns to center the buttons
+    # We use empty 'spacer' columns on the left and right to force centering
+    left_spacer, col1, col2, col3, right_spacer = st.columns([2, 1, 1, 1, 2])
+
+    with col1:
+        if st.button("Home", key="nav_home"):
+            st.session_state.page = "home"
+            st.rerun()
+    with col2:
+        if st.button("Challenges", key="nav_challenges"):
+            st.session_state.page = "challenges"
+            st.rerun()
+    with col3:
+        if st.button("Analytics", key="nav_analytics"):
+            st.session_state.page = "analytics"
+            st.rerun()
