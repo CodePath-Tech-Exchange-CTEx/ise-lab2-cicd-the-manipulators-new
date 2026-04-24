@@ -295,3 +295,54 @@ def get_genai_analytics_summary(user_id):
     import json
     clean = response.text.strip().replace("```json", "").replace("```", "")
     return json.loads(clean)
+
+def get_initial_challenges():
+    return [
+        {"id": "1", "description": "3 Days Challenge: 50 Burpees every morning", "reward": 30},
+        {"id": "2", "description": "3 Days Challenge: 60 Push-ups daily", "reward": 35},
+        {"id": "3", "description": "5 Days Challenge: 100 Jumping Jacks + 30 Squats", "reward": 45},
+        {"id": "4", "description": "5 Days Challenge: 1-minute Plank + 40 Push-ups", "reward": 50},
+        {"id": "5", "description": "7 Days Challenge: 70 Push-ups + 50 Sit-ups daily", "reward": 65},
+        {"id": "6", "description": "7 Days Challenge: 100 Squats + 2-minute Plank", "reward": 70},
+        {"id": "7", "description": "10 Days Challenge: 100 Burpees + 100 Jumping Jacks", "reward": 90},
+        {"id": "8", "description": "10 Days Challenge: 150 Push-ups + 100 Sit-ups", "reward": 100},
+        {"id": "9", "description": "14 Days Challenge: 200 Squats + 3-minute Plank daily", "reward": 120},
+    ]
+
+
+def generate_ai_challenge():
+    import json
+    import time
+    from google import genai
+    from google.genai.types import HttpOptions
+
+    prompt = """
+    You are a fitness challenge generator. Generate a single fitness challenge for a user.
+
+    Return a JSON object only (no markdown, no backticks) with exactly this structure:
+    {
+        "description": "<A specific, actionable fitness challenge string, e.g. '3 Days Challenge: 50 Burpees every morning'>",
+        "reward": <int, reward amount between 30 and 120 based on difficulty>
+    }
+    """
+
+    client = genai.Client(
+        http_options=HttpOptions(api_version="v1"),
+        vertexai=True,
+        project="jesus-munoz-utep",
+        location="us-central1"
+    )
+
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt,
+    )
+
+    clean = response.text.strip().replace("```json", "").replace("```", "")
+    result = json.loads(clean)
+
+    return {
+        "id": str(int(time.time())),  # unique ID
+        "description": result["description"],
+        "reward": result["reward"]
+    }
