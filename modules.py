@@ -9,8 +9,9 @@
 
 from internals import create_component
 from datetime import datetime #to calculate total time summary (Jesus Munoz)
-from datetime import datetime #to calculate total time summary (Jesus Munoz)
+import time
 import streamlit as st
+from data_fetcher import generate_ai_challenge
 
 
 
@@ -222,7 +223,7 @@ def display_navbar():
     st.markdown("""
         <style>
             /* 1. The main Navbar container */
-            div[data-testid="stHorizontalBlock"]:has(button[kind="secondary"]) {
+            div[data-testid="stHorizontalBlock"]:has(#nav_home) {
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -252,8 +253,9 @@ def display_navbar():
             }
 
             /* 3. Hover effect */
-            div[data-testid="stHorizontalBlock"] button[kind="secondary"]:hover {
+            div[data-testid="stButton"] button:hover {
                 background-color: #A8CCF5 !important;
+                color: #111111 !important;
                 border: none !important;
             }
 
@@ -515,3 +517,130 @@ def display_analytics(username, user_image, timestamp, workouts_list, genai_summ
         '<div class="analytics-footer">Analytics powered by GenAI · Data refreshes each session</div>',
         unsafe_allow_html=True,
     )
+
+def display_challenges_grid():
+    st.markdown("""
+        <style>
+        h1 {
+            color: #000000 !important;
+        }
+        [data-testid="stAppViewContainer"] {
+            background-color: #FFFFFF !important;
+        }
+        [data-testid="stMain"] {
+            background-color: #FFFFFF !important;
+        }
+        [data-testid="stVerticalBlock"] > div:has(div.card-green) { 
+            background-color: #E8F5E9 !important; 
+            border-radius: 15px; 
+            padding: 10px;
+        }
+        [data-testid="stVerticalBlock"] > div:has(div.card-green) { 
+            background-color: #E8F5E9 !important; 
+            border-radius: 15px; 
+            padding: 10px;
+        }
+        [data-testid="stVerticalBlock"] > div:has(div.card-yellow) { 
+            background-color: #FFFDE7 !important; 
+            border-radius: 15px; 
+            padding: 10px;
+        }
+        [data-testid="stVerticalBlock"] > div:has(div.card-red) { 
+            background-color: #FFEBEE !important; 
+            border-radius: 15px; 
+            padding: 10px;
+        }
+        [data-testid="stVerticalBlock"] > div:has(div.challenge-card) {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        [data-testid="stVerticalBlock"] > div:has(div.challenge-card):hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0px 20px 30px rgba(0,0,0,0.12);
+        }
+        .challenge-desc { 
+            height: 90px; 
+            font-weight: 600; 
+            color: #2C3E50 !important;
+            text-align: center; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            font-size: 1.1rem;
+        }
+        .reward-box { 
+            background-color: rgba(255,255,255,0.7);
+            padding: 8px; 
+            border: 1px solid rgba(0,0,0,0.1); 
+            text-align: center; 
+            border-radius: 8px;
+            font-weight: 800;
+            color: #1B5E20;
+        }
+        .total-coins-display {
+            background-color: #BDD2DA;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: inset 0px 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
+    st.title("🏆 Fitness Challenges")
+
+    m_col1, m_col2, m_col3 = st.columns([1, 1, 1])
+    with m_col2:
+        st.markdown(f"""
+            <div class="total-coins-display">
+                <p style="margin:0; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Current Balance</p>
+                <h1 style="margin:0; font-size: 3rem;">$ {st.session_state.total_coins}</h1>
+            </div>
+        """, unsafe_allow_html=True)
+
+    challenges = st.session_state.my_challenges  # ← prototype key
+
+    for i in range(0, len(challenges), 4):
+        cols = st.columns(4)
+        for j in range(4):
+            idx = i + j
+            if idx < len(challenges):
+                ch = challenges[idx]
+
+                if ch['reward'] < 40:       # ← prototype key
+                    color_class = "card-green"
+                elif ch['reward'] < 80:     # ← prototype key
+                    color_class = "card-yellow"
+                else:
+                    color_class = "card-red"
+
+                with cols[j].container():
+                    st.markdown(f'<div class="challenge-card {color_class}"></div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="challenge-desc">{ch["description"]}</div>', unsafe_allow_html=True)  # ← prototype key
+
+                    btn_c, rew_c = st.columns([1.1, 0.9])
+
+                    if btn_c.button("COMPLETE", key=f"btn_{ch['id']}", use_container_width=True):
+                        reward_amt = ch['reward']           # ← prototype key
+                        desc = ch['description']            # ← prototype key
+                        st.session_state.total_coins += reward_amt
+                        st.session_state.my_challenges.pop(idx)  # ← prototype key
+                        st.balloons()
+                        st.toast(f"🔥 BOOM! +${reward_amt}")
+                        st.success(f"🎊 CONGRATULATIONS! You finished '{desc}' and earned ${reward_amt}!")
+                        time.sleep(1.5)
+                        st.rerun()
+
+                    rew_c.markdown(f'<div class="reward-box">${ch["reward"]}</div>', unsafe_allow_html=True)  # ← prototype key
+
+    if len(st.session_state.my_challenges) < 16:  # ← prototype key
+        st.divider()
+        if st.button("✨ GENERATE NEW AI CHALLENGE", use_container_width=True):
+            with st.status("Connecting to Vertex AI...", expanded=True) as status:
+                new_ch = generate_ai_challenge()
+                st.session_state.my_challenges.append(new_ch)  # ← prototype key
+                status.update(label="Challenge Created!", state="complete", expanded=False)
+            st.rerun()

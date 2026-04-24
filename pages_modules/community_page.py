@@ -15,11 +15,17 @@ def display_community_page():
     """Displays the community feed - friends' posts + GenAI advice."""
     st.markdown("""
     <style>
-      .stApp { background-color: #FFFFFF; }
-      #MainMenu, footer, header { visibility: hidden; }
-      h1 { color: #000000 !important ; }
-      h2, [data-testid="stHeading"] { color: #000000 !important; }
-      h3 { color: #000000 !important; }
+        [data-testid="stVerticalBlock"] > div:has(div.challenge-card) {
+            box-shadow: none !important;
+            border: none !important;
+            transform: none !important;
+            transition: none !important;
+        }
+        .stApp { background-color: #FFFFFF; }
+        #MainMenu, footer, header { visibility: hidden; }
+        h1 { color: #000000 !important ; }
+        h2, [data-testid="stHeading"] { color: #000000 !important; }
+        h3 { color: #000000 !important; }
     </style>
     """, unsafe_allow_html=True)
     st.title('Community Feed')

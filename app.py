@@ -6,9 +6,10 @@
 #############################################################################
 
 import streamlit as st
-from community_page import display_community_page
-from pages.analytics import display_analytics_page
-from login_page import display_login_page, FAKE_USER_ID
+from pages_modules.challenges import display_challenges_page
+from pages_modules.community_page import display_community_page
+from pages_modules.analytics import display_analytics_page
+from pages_modules.login_page import display_login_page, FAKE_USER_ID
 from modules import display_my_custom_component, display_post, display_genai_advice, display_activity_summary, display_recent_workouts, display_navbar
 from data_fetcher import get_user_posts, get_genai_advice, get_user_profile, get_user_sensor_data, get_user_workouts, get_genai_analytics_summary
 from datetime import datetime
@@ -32,8 +33,7 @@ def main():
       if st.session_state.page == "home":
           display_community_page()
       elif st.session_state.page == "challenges":
-          st.header("Challenges Page") # not needed
-          # call display_challenges_page()
+        display_challenges_page(userId)
       elif st.session_state.page == "analytics":
         profile = get_user_profile(userId)
         display_analytics_page(
